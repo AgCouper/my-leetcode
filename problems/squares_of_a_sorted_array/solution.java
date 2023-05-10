@@ -1,41 +1,21 @@
 class Solution {
     public int[] sortedSquares(int[] nums) {
-        int posStart = nums.length;
-        for (int i = 0; i < nums.length; ++i) {
-            if (nums[i] >= 0) {
-                posStart = i;
-                break;
+        int res[] = new int[nums.length];
+        int p1 = 0;
+        int p2 = nums.length - 1;
+        int idx = p2;
+
+        while (p1 <= p2)  {
+            int n1 = nums[p1];
+            int n2 = nums[p2];
+
+            if (Math.abs(n1) > Math.abs(n2)) {
+                res[idx--] = n1 * n1;
+                p1++;
+            } else {
+                res[idx--] = n2 * n2;
+                p2--;
             }
-        }
-
-        int[] res = new int[nums.length];
-        int negCursor = posStart - 1; // negative start
-        int posCursor = posStart;     // positive start
-        int resCursor = 0;
-
-        while (negCursor >= 0 && posCursor < nums.length) {
-            int negSquared = 0, posSquared = 0;
-
-            negSquared = nums[negCursor] * nums[negCursor];
-            posSquared = nums[posCursor] * nums[posCursor];
-
-            if (negSquared < posSquared) {
-                res[resCursor] = negSquared;
-                negCursor--;
-            } else  {
-                res[resCursor] = posSquared;
-                posCursor++;
-            }
-
-            resCursor++;
-        }
-
-        for (int i = negCursor; i>= 0; i--) {
-            res[resCursor++] = nums[i] * nums[i];
-        }
-
-        for (int i = posCursor; i< nums.length; i++) {
-            res[resCursor++] = nums[i] * nums[i];
         }
 
         return res;
